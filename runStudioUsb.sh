@@ -14,13 +14,12 @@ toolPath=~/Android/tools			#tool path
 platformlPath=~/Android/platform-tools		#platform tools
 gradlePath=$moPoint/android-studio/gradle/gradle-2.14.1/bin/gradle  #gradle path
 newPath=''					#new path to be added to bashrc
-param="${$@:=null}"				#set parameters to arg otherwise null
 
 
 #help (how to use this script
 print_help() {
-	echo "USAGE 1: $(basename $0) [to mount drive and add binary to ENV]"
-	echo "USAGE 2: $(basename $0) studio [everything above and run studio]"
+	echo "USAGE 1: $(basename $0)		<to mount drive and add binary to ENV>"
+	echo "USAGE 2: $(basename $0) studio 	<everything above and run studio>"
 }
 
 #mount usb drive
@@ -60,10 +59,10 @@ setting_paths() {
 #running studio
 run_studio() {
 	#number of parameters eq 1 and is studio or Studio, we launch android studio
-	if ((${#param[@]} -eq 1 && ${param[0]} == "studio" || ${param[0]} == "Studio")); then
+	if [ -n "$1" ] && [ "$1" =~ "[^Ss]tudio" ]; then
 		bash $binPath/studio.sh
-	elif [ ${#param[@]} -gt 1 ]; then
-		print_help
+	elif [ -z "$1" ] || [ !"$1" ]; then
+		print_help	
 	else
 		echo "Finished..."
 	fi
@@ -83,7 +82,7 @@ touch $log
 mount_usb
 create_links
 setting_paths
-run_studio ${param[@]}
+run_studio $1
 
 
 #END
