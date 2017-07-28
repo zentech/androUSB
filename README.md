@@ -1,2 +1,2 @@
 # androUSB
-Shell script to run android from usb in small linux laptops
+Shell script to run Android Studio from usb in small linux laptops
